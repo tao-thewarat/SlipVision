@@ -8,26 +8,72 @@ SlipVision คือ backend สำหรับระบบ OCR ใบเสร�
 
 ```
 SlipVision/
-├── app/                     # โค้ดหลักของ backend
-│   ├── main.py              # จุดเริ่มต้นของ FastAPI
+app/
+├── main.py
+│
+├── api/
+│   ├── v1/
+│   │   ├── ocr.py
+│   │   └── health.py
 │   │
-│   ├── api/                 # รวมไฟล์ API (router)
-│   │   └── ocr.py           # API สำหรับ OCR slip
+│   └── deps.py
+│
+├── services/
+│   ├── ocr/
+│   │   ├── rapidocr_engine.py
+│   │   ├── preprocessing.py
+│   │   └── postprocess.py
 │   │
-│   ├── services/            # business logic / service layer
-│   │   └── ocr_service.py   # เรียกใช้ RapidOCR
-│   │
-│   ├── models/              # model / schema (เตรียมไว้ใช้กับ DB)
+│   └── slip/
+│       ├── field_extractor.py
+│       └── validator.py
+│
+├── repositories/
+│   └── slip_repository.py
+│
+├── models/
+│   ├── schema/
 │   │   └── slip.py
 │   │
-│   └── core/                # config หรือ setting ต่าง ๆ
-│       └── config.py
+│   └── db/
+│       └── slip_model.py
 │
-├── .venv/                   # virtual environment (สร้างโดย uv)
-├── pyproject.toml           # รายชื่อ dependency และ config
-├── .python-version          # เวอร์ชัน Python ที่ใช้
-├── .env                     # environment variables
-└── README.md                # ไฟล์อธิบายโปรเจกต์
+├── core/
+│   ├── config.py
+│   └── logging.py
+│
+└── utils/
+│   └── image_utils.py
+tests/
+├── conftest.py
+├── unit/
+├── services/
+│   ├── ocr/
+│   │   ├── test_preprocessing.py
+│   │   │   ├── test_postprocess.py
+│   │   │   └── test_rapidocr_engine.py
+│   │   └── slip/
+│   │       ├── test_field_extractor.py
+│   │       └── test_validator.py
+│   │
+│   ├── utils/
+│   │   └── test_image_utils.py
+│   │
+│   └── core/
+│       ├── test_config.py
+│       └── test_logging.py
+│
+├── integration/
+│   └── api/
+│       ├── test_health.py
+│       └── test_ocr_api.py
+│
+└── fixtures/
+    ├── images/
+    │   ├── slip_01.jpg
+    │   └── slip_02.png
+    └── ocr_outputs/
+        └── rapidocr_sample.json
 ```
 
 ### อธิบายแบบสั้น ๆ
@@ -190,3 +236,4 @@ uv run <command>        # รันคำสั่ง
 ```bash
 uv run uvicorn app.main:app --port 8080
 ```
+test ci
