@@ -236,3 +236,4 @@ uv run <command>        # รันคำสั่ง
 ```bash
 uv run uvicorn app.main:app --port 8080
 ```
+test ci
